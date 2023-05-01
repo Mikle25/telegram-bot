@@ -1,19 +1,26 @@
 import { Markup } from 'telegraf'
-import { BUTTONS, PAIR_EXCHANGE, TYPE_COURSE } from './const.js'
+import { BUTTONS, PAIR_EXCHANGE, COURSE_TYPE, MAIN_BTN } from './const.js'
 
-export function BotCurrentExchange() {
+export function BotMainButtons() {
   return Markup.keyboard(
     [
-      Markup.button.callback(
-        BUTTONS.current_exchange.text,
-        BUTTONS.current_exchange.key
-      ),
+      Markup.button.callback(MAIN_BTN.products.text, MAIN_BTN.products.key),
+      Markup.button.callback(MAIN_BTN.exchange.text, MAIN_BTN.exchange.key),
+    ],
+    { columns: 2 }
+  ).resize()
+}
+
+export function BotProducts() {
+  return Markup.keyboard(
+    [
       Markup.button.callback(
         BUTTONS.product_list.text,
         BUTTONS.product_list.key
       ),
       Markup.button.callback(BUTTONS.done.text, BUTTONS.done.key),
       Markup.button.callback(BUTTONS.remove.text, BUTTONS.remove.key),
+      Markup.button.callback(BUTTONS.back.text, BUTTONS.remove.key),
     ],
     { columns: 3 }
   ).resize()
@@ -21,7 +28,7 @@ export function BotCurrentExchange() {
 
 export function BotTypeCourse() {
   return Markup.inlineKeyboard(
-    TYPE_COURSE.map((type) => Markup.button.callback(type.text, type.key)),
+    COURSE_TYPE.map((type) => Markup.button.callback(type.text, type.key)),
     { columns: 2 }
   )
 }

@@ -11,3 +11,7 @@ export const showProductList = (list) => {
               .join('')}
         `
 }
+
+export const formatNumber = (num) => {
+  return (Number(num) * 100) / 100;
+}

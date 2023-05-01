@@ -1,7 +1,16 @@
-export const commands = `
-    /start - Перезапустить бота
-    /help - Помощь
+export const commands = `/start - Перезапустить бота\n/help - Помощь
 `
+
+export const MAIN_BTN = {
+  products: {
+    text: '🛒Продукты',
+    key: 'products',
+  },
+  exchange: {
+    text: '🤑Курс валют',
+    key: 'exchange',
+  },
+}
 
 export const BUTTONS = {
   current_exchange: {
@@ -20,6 +29,10 @@ export const BUTTONS = {
     text: '❌Удалить',
     key: 'remove',
   },
+  back: {
+    text: '🔙Back',
+    key: 'back',
+  },
 }
 
 export const PAIR_EXCHANGE = [
@@ -37,11 +50,11 @@ export const PAIR_EXCHANGE = [
   },
   {
     key: 'back',
-    name: '< Back',
-  }
+    name: '🔙Back',
+  },
 ]
 
-export const TYPE_COURSE = [
+export const COURSE_TYPE = [
   {
     text: 'Spot',
     key: 'spot',
