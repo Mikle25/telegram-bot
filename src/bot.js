@@ -37,13 +37,14 @@ bot.hears(BUTTONS.product_list.text, async (ctx) => {
         const resp = await getProductList();
 
         ctx.reply(showProductList(resp))
+
     } catch (e) {
         console.log(e.message)
     }
 })
 
 bot.hears(BUTTONS.done.text, async (ctx) => {
-    ctx.session ??= INIT_SESSION;
+    ctx.session = ctx.session || INIT_SESSION;
     try {
         const resp = await getProductList();
 
@@ -55,7 +56,7 @@ bot.hears(BUTTONS.done.text, async (ctx) => {
 })
 
 bot.hears(BUTTONS.remove.text, async (ctx) => {
-    ctx.session ??= INIT_SESSION;
+    ctx.session = ctx.session || INIT_SESSION
 
     try {
         const resp = await getProductList();
@@ -68,35 +69,35 @@ bot.hears(BUTTONS.remove.text, async (ctx) => {
 })
 
 bot.on('callback_query', async (ctx) => {
-    ctx.session ??= INIT_SESSION;
+    ctx.session = ctx.session || INIT_SESSION
         try {
             const resp = await getProductList();
             const product = resp.find(p => p.id === Number(ctx.callbackQuery.data))
 
-            if (ctx.session.type === 'done') {
-                if (!product) {
-                    ctx.deleteMessage()
-                    ctx.reply('Продукт не найден!')
-                }
-
-                product.checked = !product.checked;
-
-                await updateStatusProduct(product)
-            }
-            else if (ctx.session.type === 'remove') {
-                if (!product) {
-                    ctx.deleteMessage()
-                    ctx.reply('Продукт не найден!')
-                }
-                await deleteProduct(ctx.callbackQuery.data)
+        if (ctx.session.type === 'done') {
+            if (!product) {
+                ctx.deleteMessage()
+                ctx.reply('Продукт не найден!')
             }
 
-        } catch (e) {
-            console.log(e.message)
-        } finally {
-            const resp = await getProductList();
-            ctx.reply(showProductList(resp))
+            product.checked = !product.checked;
+
+            await updateStatusProduct(product)
         }
+        else if (ctx.session.type === 'remove') {
+            if (!product) {
+                ctx.deleteMessage()
+                ctx.reply('Продукт не найден!')
+            }
+            await deleteProduct(ctx.callbackQuery.data)
+        }
+
+    } catch (e) {
+        console.log(e.message)
+    } finally {
+        const resp = await getProductList();
+        ctx.reply(showProductList(resp))
+    }
 })
 
 bot.action(['USDTUAH', 'ATOMUSDT', 'NEARUSDT'], async (ctx) => {
